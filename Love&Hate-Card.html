@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love or Not</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <style>
+        body{
+            margin: 0;
+            background-color: #333333;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+        @media (max-width: 430px) and (max-height:2730px){
+            
+        }
+        .groups, .card-group, .card{
+            aspect-ratio: 5/7;
+        }
+        .groups, .card-group, .big-card{
+            width: 30vmin;
+        }
+
+        
+        .card-group[data-status="after"]{
+            transform: translateX(50%) scale(0);
+        }
+        .card-group[data-index="1"]> .big-card:nth-child(4){
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        
+        }
+        .card-group[data-index="1"]> .big-card:nth-child(2){
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1561948955-570b270e7c36?q=80&w=1802&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        
+        }
+        .card-group[data-index="2"]> .big-card:nth-child(3){
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1598823440012-db3cfcc98ce9?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        
+        }
+        .card-group[data-index="2"]> .big-card:nth-child(4){
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1590420485404-f86d22b8abf8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        
+        }
+        .card-group[data-status="active-from-before"]{
+            transform: translateX(-50%) scale(0);
+            transition: none;
+        }
+        .card-group[data-status="active-from-after"]{
+            transform: translateX(50%) scale(0);
+            transition: none;
+        }
+        .card-group[data-status="before"]{
+            transform: translateX(-50%) scale(0);
+        }
+        .card-group[data-status="unknown"]{
+            transform: scale(0);
+        }
+        .card-group[data-status="active"]{
+            transition-delay: 200ms;
+        }
+
+        .card-group{
+            position: absolute;
+            transition: transform 400ms ease;
+        }
+        .card{
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: transform 800ms cubic-bezier(.07,.79,.41,.86);
+        }
+        .big-card{
+            width: 30vmin;
+            border-radius: 1vmin;
+        }
+
+        .small-card{
+            width: 12vmin;
+            border-radius: 2vmin;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .big-card:nth-child(1){ 
+            transform: translateX(-10%) rotate(-3deg);
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1557246565-8a3d3ab5d7f6?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .big-card:nth-child(2){
+            transform: rotate(2deg);
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .big-card:nth-child(3){
+            transform: translateX(-5%) rotate(-5deg);
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .big-card:nth-child(4){ 
+            transform: translateX(-10%) rotate(5deg);
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1561948955-570b270e7c36?q=80&w=1802&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .small-card:nth-child(5){
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1590420485404-f86d22b8abf8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .small-card:nth-child(6){
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1564166174574-a9666f590437?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .small-card:nth-child(7){
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1512544783971-fb9a0691eda5?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .small-card:nth-child(8){
+            background-size: cover;
+            background-image: url("https://images.unsplash.com/photo-1598823440012-db3cfcc98ce9?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .card-group:hover > .big-card:nth-child(1){
+            transform: translate(-75%,15%) rotate(-20deg);
+        }
+
+        .card-group:hover > .big-card:nth-child(2){
+            transform: translate(-25%,5%) rotate(-7deg);
+        }
+
+        .card-group:hover > .big-card:nth-child(3){
+            transform: translate(25%,5%) rotate(7deg);
+        }
+
+        .card-group:hover > .big-card:nth-child(4){
+            transform: translate(75%,15%) rotate(23deg);
+        }
+
+        .card-group:hover > .small-card:nth-child(5){
+            transform: translate(200%,-170%) rotate(-15deg);
+        }
+        .card-group:hover > .small-card:nth-child(6){
+            transform: translate(160%,170%) rotate(15deg);
+        }
+        .card-group:hover > .small-card:nth-child(7){
+            transform: translate(-200%,-190%) rotate(15deg);
+        }
+        .card-group:hover > .small-card:nth-child(8){
+            transform: translate(-270%,150%) rotate(-15deg);
+        }
+
+        .card-buttons{
+            margin-top: 8vmin;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 4vmin;
+        }
+        .card-buttons > button{
+            font-size: 2vmin;
+            border: 0.3vmin solid rgb(200, 200, 200);
+            border-radius: 50%;
+            background-color: transparent;
+            color: whitesmoke;
+            height: 3vmax;
+            width: 3vmax;
+            cursor: pointer;
+        }
+        .card-buttons>.love-button{
+            color: aqua;
+            border-color: aqua;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="groups">
+            <div class="card-group" data-index="0" data-status="active">
+                <div class="big-card card">
+        
+                </div>
+                <div class="big-card card">
+                    
+                </div>
+                <div class="big-card card">
+                    
+                </div>
+                <div class="big-card card">
+                    
+                </div>
+                <div class="small-card card">
+            
+                </div>
+                <div class="small-card card">
+                    
+                </div>
+                <div class="small-card card">
+                    
+                </div>
+                <div class="small-card card">
+                    
+                </div>
+            </div>
+            <div class="card-group" data-index="1" data-status="unknown">
+                <div class="big-card card">
+        
+                </div>
+                <div class="big-card card">
+                    
+                </div>
+                <div class="big-card card">
+                    
+                </div>
+                <div class="big-card card">
+                    
+                </div>
+                <div class="small-card card">
+            
+                </div>
+                <div class="small-card card">
+                    
+                </div>
+                <div class="small-card card">
+                    
+                </div>
+                <div class="small-card card">
+                    
+                </div>
+            </div>
+            <div class="card-group" data-index="2" data-status="unknown">
+                <div class="big-card card">
+        
+                </div>
+                <div class="big-card card">
+                    
+                </div>
+                <div class="big-card card">
+                    
+                </div>
+                <div class="big-card card">
+                    
+                </div>
+                <div class="small-card card">
+            
+                </div>
+                <div class="small-card card">
+                    
+                </div>
+                <div class="small-card card">
+                    
+                </div>
+                <div class="small-card card">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="card-buttons">
+            <button class="hate-button" onclick="HateClick()">
+                <i class="fa-solid fa-x"></i>
+            </button>
+            <button class="love-button" onclick="LoveClick()"">
+                <i class="fa-solid fa-heart" ></i>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        let activeIndex = 0;
+        const groups = document.getElementsByClassName("card-group");
+        const LoveClick = () =>{
+            const nextIndex = activeIndex +1 <= groups.length -1 ? activeIndex +1:0;
+            const currentGroup = document.querySelector(`[data-index = "${activeIndex}"]`),
+                nextGroup = document.querySelector(`[data-index = "${nextIndex}"]`);
+
+            currentGroup.dataset.status = "after";
+            nextGroup.dataset.status = "active-from-before";
+            setTimeout(()=>{
+                nextGroup.dataset.status = "active";
+                activeIndex = nextIndex;
+            });
+        }
+
+        const HateClick = () =>{
+            const nextIndex = activeIndex -1 >= 0 ? activeIndex -1 : groups.length -1;
+            const currentGroup = document.querySelector(`[data-index = "${activeIndex}"]`),
+                nextGroup = document.querySelector(`[data-index = "${nextIndex}"]`);
+
+            currentGroup.dataset.status = "before";
+            nextGroup.dataset.status = "active-from-after";
+            setTimeout(()=>{
+                nextGroup.dataset.status = "active";
+                activeIndex = nextIndex;
+            });
+        }
+
+        //const jsonStr = document.getElementById('json-data').textContent;
+        //const jsonData = JSON.parse(jsonStr);
+
+        //jsonData();
+
+    </script>
+    
+    <!-- <script id="json-data" type="application/json">
+        {
+            "rewrites": [
+              { "source": "/(.*)", "destination": "/" }
+            ]
+        }
+    </script> -->
+    
+</body>
+</html>
